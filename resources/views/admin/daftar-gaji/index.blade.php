@@ -41,10 +41,10 @@
                     <td>{{ $item->nama_pegawai }}</td>
                     <td>{{ $item->jabatan_lama }}</td>
                     <td>{{ $item->jabatan_baru }}</td>
-                    <td>{{ $item->gaji_pokok }}</td>
-                    <td>{{ $item->tunjangan_jabatan }}</td>
-                    <td>{{ $item->tunjangan_kesejahteraan_keluarga }}</td>
-                    <td>{{ $item->total_gaji }}</td>
+                    <td>{{ number_format($item->gaji_pokok) }}</td>
+                    <td>{{ number_format($item->tunjangan_jabatan) }}</td>
+                    <td>{{ number_format($item->tunjangan_kesejahteraan_keluarga) }}</td>
+                    <td>{{ number_format($item->total_gaji) }}</td>
                     <td>{{ date('d M Y', strtotime($item->tanggal_masuk)) }}</td>
                     <td>{{ date('M Y',strtotime($item->berkala_gaji)) }}</td>
                     <td>{{ $item->jumlah_hari_kerja }}</td>
@@ -108,7 +108,7 @@
                                     <div class="mb-3">
                                         <label for="">Jumlah Hari Kerja</label>
                                         <input type="number" name="jumlah_hari_kerja" class="form-control" id="" required
-                                            autocomplete="off" max="288">
+                                            autocomplete="off" max="297">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="">Tanggung Jawab</label>
                                 <select name="nilai_tanggung_jawab" id="" class="form-select">
                                     <option value="3">Sangat Baik</option>
@@ -134,7 +134,7 @@
                                     <option value="2" selected>Baik</option>
                                     <option value="1">Cukup</option>
                                 </select>
-                            </div>
+                            </div> --}}
 
 
                         </div>
@@ -177,7 +177,7 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="">Loyalitas</label>
                                 <select name="nilai_loyalitas" id="" class="form-select">
                                     <option value="3">Sangat Baik</option>
@@ -193,7 +193,7 @@
                                     <option value="2" selected>Baik</option>
                                     <option value="1">Cukup</option>
                                 </select>
-                            </div>
+                            </div> --}}
 
                         </div>
                     </div>

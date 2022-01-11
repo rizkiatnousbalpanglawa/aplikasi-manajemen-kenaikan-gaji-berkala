@@ -24,7 +24,7 @@
                 <th class="visually-hidden">Jumlah Presensi</th>
                 <th>Total Penilaian</th>
                 <th>Berkala Gaji</th>
-                <th>Status (Disetujui)</th>
+                <th>Status (Kelayakan)</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -59,6 +59,7 @@
                 <td class="visually-hidden" id="row_jumlah_presensi">
                     {{ number_format(($item->jumlah_presensi+$item->jumlah_cuti)/$item->jumlah_hari_kerja*100) }}
                 </td>
+             
                     @php
                     $nilai_tanggung_jawab = $item->nilai_tanggung_jawab/3*100*20/100;
                     $nilai_kerjasama = $item->nilai_kerjasama/3*100*20/100;
@@ -72,6 +73,10 @@
                         $totalnilai = $totalnilai+10;
                     }
 
+                    if ($nilai_tanggung_jawab == 0) {
+                        $totalnilai = 0;
+                    }
+
                     if ($totalnilai > 100) {
                         $totalnilai = 100;
                     }
@@ -80,7 +85,14 @@
                     {{ number_format($totalnilai) }}
                 </td>
                 <td>{{ date('M Y',strtotime($item->berkala_gaji)) }}</td>
-                <td class="{{ ($item->disetujui == 'ditolak')? 'text-danger' : 'text-success' }}">{{ $item->disetujui }}
+                <td>
+                    @if ($totalnilai > 79)
+                        Layak
+                    @elseif ($totalnilai > 0)
+                        Tidak Layak
+                        @else
+                        Tidak Bisa Dinilai
+                    @endif
                 </td>
                 <td>
                     <div class="d-flex justify-content-center">
@@ -88,7 +100,7 @@
                             <i class="fas fa-list"></i>
                         </button>
 
-                        @if ($item->disetujui == 'sudah' || $item->disetujui == 'ditolak')
+                        {{-- @if ($item->disetujui == 'sudah' || $item->disetujui == 'ditolak')
                         -
 
                         @elseif($totalnilai < 80)
@@ -112,7 +124,7 @@
                                 <i class="fas fa-times"></i>
                             </button>
                         </form>
-                        @endif
+                        @endif --}}
                     </div>
 
                 </td>
@@ -149,6 +161,7 @@
                             <label for="">Jumlah Izin</label>
                             <input type="text" readonly class="form-control" id="jumlah_izin">
                         </div>
+                       
                     </div>
                     <div class="col-lg-6">
                         <div class="mb-3">
@@ -164,10 +177,14 @@
                             <input type="text" readonly class="form-control" id="jumlah_presensi">
                         </div>
                         <div class="mb-3">
-                            <label for="">Total Penilaian</label>
-                            <input type="text" readonly class="form-control" id="total_penilaian">
+                            <label for="">Jumlah Cuti</label>
+                            <input type="text" readonly class="form-control" id="jumlah_cuti">
                         </div>
                     </div>
+                </div>
+                <div class="mb-3 text-center">
+                    <label for="">Total Penilaian</label>
+                    <input type="text" readonly class="form-control text-center" id="total_penilaian">
                 </div>
             </div>
             <div class="modal-footer">
@@ -201,6 +218,7 @@
             $('#jumlah_hari_kerja').val(jumlah_hari_kerja);
             $('#jumlah_presensi').val(jumlah_presensi);
             $('#jumlah_izin').val(jumlah_izin);
+            $('#jumlah_cuti').val(jumlah_cuti);
             $('#total_penilaian').val(total_penilaian);
 
             $('#perhitungan').modal('toggle');

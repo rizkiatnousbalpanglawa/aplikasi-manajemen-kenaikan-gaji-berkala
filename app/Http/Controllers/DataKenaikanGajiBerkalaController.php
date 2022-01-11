@@ -17,13 +17,23 @@ class DataKenaikanGajiBerkalaController extends Controller
         //     ->get();
 
         $data['daftar-gaji'] = Daftargaji::all();
-        return view('admin/data-kenaikan-gaji-berkala.index', compact('data'));
+        return view('admin.data-kenaikan-gaji-berkala.index', compact('data'));
     }
 
     public function setuju(Daftargaji $daftargaji)
     {
 
         $data['diteruskan'] = 'sudah';
+
+        $daftargaji->update($data);
+
+        return redirect(route('data-kenaikan-gaji-berkala'));
+    }
+
+    public function timPenilai(Daftargaji $daftargaji)
+    {
+
+        $data['diteruskan'] = 'tim_penilai';
 
         $daftargaji->update($data);
 

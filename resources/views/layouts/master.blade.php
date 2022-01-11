@@ -52,6 +52,8 @@
                         @include('layouts.sidebar_admin')
                         @elseif (Auth::user()->role == 'ketua')
                         @include('layouts.sidebar_ketua')
+                        @elseif (Auth::user()->role == 'tim_penilai')
+                        @include('layouts.sidebar_tim_penilai')
                         @else
                         <a class="nav-link" href="{{ route('profil-pegawai') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>

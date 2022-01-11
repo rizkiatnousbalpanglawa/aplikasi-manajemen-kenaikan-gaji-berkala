@@ -40,38 +40,46 @@
                 <td>{{ $item->pegawai->satuanKerja->nama_satuan_kerja }}</td>
                 <td>
                     @if ($item->nilai_tanggung_jawab == 3)
-                        Sangat Baik
+                    Sangat Baik
                     @elseif($item->nilai_tanggung_jawab == 2)
-                        Baik
+                    Baik
+                    @elseif($item->nilai_tanggung_jawab == 1)
+                    Cukup
                     @else
-                        Cukup
+                    -
                     @endif
                 </td>
                 <td>
                     @if ($item->nilai_kerjasama == 3)
-                        Sangat Baik
+                    Sangat Baik
                     @elseif($item->nilai_kerjasama == 2)
-                        Baik
+                    Baik
+                    @elseif($item->nilai_kerjasama == 1)
+                    Cukup
                     @else
-                        Cukup
+                    -
                     @endif
                 </td>
                 <td>
                     @if ($item->nilai_loyalitas == 3)
-                        Sangat Baik
+                    Sangat Baik
                     @elseif($item->nilai_loyalitas == 2)
-                        Baik
+                    Baik
+                    @elseif($item->nilai_loyalitas == 1)
+                    Cukup
                     @else
-                        Cukup
+                    -
                     @endif
                 </td>
                 <td>
                     @if ($item->nilai_inovasi == 3)
-                        Sangat Baik
+                    Sangat Baik
                     @elseif($item->nilai_inovasi == 2)
-                        Baik
+                    Baik
+                    @elseif($item->nilai_inovasi == 1)
+                    Cukup
                     @else
-                        Cukup
+                    -
                     @endif
                 </td>
                 <td>{{ $item->jumlah_presensi }} kali</td>
@@ -81,22 +89,66 @@
                 <td>{{ number_format($item->total_gaji + 50000) }}</td>
                 <td>{{ date('M Y',strtotime($item->berkala_gaji)) }}</td>
                 <td>
-                    @if ($item->disetujui == "sudah")
-                        Disetujui untuk naik gaji
+                    @if ($item->diteruskan == 'belum' && $item->total_gaji != 0)
+                        Menunggu Admin teruskan ke Admin Tim Penilai
+                    @elseif($item->diteruskan == 'sudah')
+                        @php
+                        $nilai_tanggung_jawab = $item->nilai_tanggung_jawab/3*100*20/100;
+                        $nilai_kerjasama = $item->nilai_kerjasama/3*100*20/100;
+                        $nilai_loyalitas = $item->nilai_loyalitas/3*100*20/100;
+                        $nilai_inovasi = $item->nilai_inovasi/3*100*20/100;
+                        $nilai_hadir = (($item->jumlah_presensi+$item->jumlah_cuti)/$item->jumlah_hari_kerja*100)*20/100;
+
+                        $totalnilai = $nilai_tanggung_jawab+$nilai_kerjasama+$nilai_loyalitas+$nilai_inovasi+$nilai_hadir;
+
+                        if ($item->jumlah_cuti == 0) {
+                            $totalnilai = $totalnilai+10;
+                        }
+
+                        if ($totalnilai > 100) {
+                            $totalnilai = 100;
+                        }
+                        @endphp
+
+                        @if ($totalnilai > 79)
+                        Layak
+                        @elseif ($totalnilai > 0)
+                        Tidak Layak
+                        @else
+                        Tidak Bisa Dinilai
+                        @endif
+                    @elseif ($item->diteruskan == 'tim_penilai' && $item->nilai_tanggung_jawab != null && $item->total_gaji != 0)
+                        Menunggu Admin Meneruskan Ke Ketua
+                    @elseif ($item->total_gaji == 0)
+                        Tidak Bisa dinilai
                     @else
-                        Belum disetujui untuk naik gaji
+                        Menunggu Admin Tim Penilai
                     @endif
+
                 </td>
                 <td>
                     @if ($item->diteruskan == "sudah")
-                   -
-                    @else
+                    -
+                    @elseif($item->diteruskan == "tim_penilai" && $item->nilai_tanggung_jawab == null)
+                    -
+                    @elseif($item->diteruskan == "tim_penilai" && $item->nilai_tanggung_jawab != null)
                     <form action="{{ route('kenaikan-gaji-berkala.teruskan',$item->id) }}" method="post">
                         @csrf
                         @method('patch')
-                       
+
                         <button class="btn btn-primary btn-sm">
-                            Teruskan
+                            Teruskan ke Ketua
+                        </button>
+                    </form>
+                    @elseif ($item->total_gaji == 0)
+                        Tidak Bisa dinilai
+                    @else
+                    <form action="{{ route('kenaikan-gaji-berkala.teruskan-tim-penilai',$item->id) }}" method="post">
+                        @csrf
+                        @method('patch')
+
+                        <button class="btn btn-primary btn-sm">
+                            Teruskan ke Tim Penilai
                         </button>
                     </form>
                     @endif

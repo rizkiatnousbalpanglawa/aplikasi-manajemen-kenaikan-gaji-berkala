@@ -22,3 +22,4 @@
     <div class="sb-nav-link-icon"><i class="far fa-file"></i></div>
     Laporan KGB
 </a>
+
