@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Daftargaji;
 use App\Pegawai;
 use App\Satuankerja;
 use App\User;
@@ -50,6 +51,7 @@ class PegawaiController extends Controller
     {
         Pegawai::where('id',$request->pegawai_id)->delete();
         User::where('id',$request->user_id)->delete();
+        Daftargaji::where('pegawais_id',$request->pegawai_id)->delete();
         return back();
     }
 }
