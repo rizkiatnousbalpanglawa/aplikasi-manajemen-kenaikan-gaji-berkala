@@ -101,7 +101,7 @@
                             <div class="mb-3">
                                 <label for="">Tanggal Masuk</label>
                                 <input type="date" name="tanggal_masuk" class="form-control" id="" required
-                                    autocomplete="off">
+                                    autocomplete="off" >
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">

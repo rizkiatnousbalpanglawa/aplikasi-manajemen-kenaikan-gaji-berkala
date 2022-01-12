@@ -17,6 +17,7 @@
     <table id="datatablesSimple" class="bg-white">
         <thead>
             <tr>
+                <th>No</th>
                 <th>Nama Pegawai</th>
                 <th>Satuan Kerja</th>
                 <th>Nilai Tanggung Jawab</th>
@@ -36,6 +37,7 @@
         <tbody>
             @foreach ($data['daftar-gaji'] as $item)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->pegawai->nama_pegawai }}</td>
                 <td>{{ $item->pegawai->satuanKerja->nama_satuan_kerja }}</td>
                 <td>
@@ -46,7 +48,7 @@
                     @elseif($item->nilai_tanggung_jawab == 1)
                     Cukup
                     @else
-                    -
+                    0
                     @endif
                 </td>
                 <td>
@@ -57,7 +59,7 @@
                     @elseif($item->nilai_kerjasama == 1)
                     Cukup
                     @else
-                    -
+                    0
                     @endif
                 </td>
                 <td>
@@ -68,7 +70,7 @@
                     @elseif($item->nilai_loyalitas == 1)
                     Cukup
                     @else
-                    -
+                    0
                     @endif
                 </td>
                 <td>
@@ -79,7 +81,7 @@
                     @elseif($item->nilai_inovasi == 1)
                     Cukup
                     @else
-                    -
+                    0
                     @endif
                 </td>
                 <td>{{ $item->jumlah_presensi }} kali</td>

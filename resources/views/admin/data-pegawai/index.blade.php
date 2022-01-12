@@ -37,7 +37,11 @@
                 {{-- <td></td> --}}
                 <td>
                     <form action="" method="post">
-                        <button class="btn btn-danger btn-sm">
+                        @method('delete')
+                        @csrf
+                        <input type="hidden" name="pegawai_id" value="{{ $item->pegawai_id }}">
+                        <input type="hidden" name="user_id" value="{{ $item->user_id }}">
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin Hapus?')">
                             <i class="fas fa-times"></i>
                             Hapus
                         </button>

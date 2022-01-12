@@ -19,6 +19,8 @@ Route::middleware(['checkRole:admin,tim_penilai'])->group(function () {
 Route::middleware(['checkRole:admin'])->group(function () {
     Route::get('/pegawai', 'PegawaiController@index')->name('pegawai');
     Route::post('/pegawai', 'PegawaiController@store')->name('pegawai.store');
+    Route::delete('/pegawai', 'PegawaiController@delete')->name('pegawai.delete');
+
     Route::get('/satuan-kerja', 'SatuankerjaController@index')->name('satuan-kerja');
     Route::post('/satuan-kerja', 'SatuankerjaController@store')->name('satuan-kerja.store');
     Route::post('/satuan-kerja/hapus/{satuankerja}', 'SatuankerjaController@destroy')->name('satuan-kerja.hapus');

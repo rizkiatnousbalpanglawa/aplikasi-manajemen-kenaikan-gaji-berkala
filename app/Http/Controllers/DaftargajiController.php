@@ -35,6 +35,22 @@ class DaftargajiController extends Controller
             $data['tunjangan_kesejahteraan_keluarga'] = 0;
             $data['total_gaji'] = 0;
         }
+
+        if (date('Y', strtotime($request->tahun_masuk)) != "2020" ) {
+            $data['gaji_pokok'] = 0;
+            $data['tunjangan_jabatan'] = 0;
+            $data['tunjangan_kesejahteraan_keluarga'] = 0;
+            $data['total_gaji'] = 0;
+        }
+
+        if (date('Y', strtotime($request->berkala_gaji)) != "2021") {
+            $data['gaji_pokok'] = 0;
+            $data['tunjangan_jabatan'] = 0;
+            $data['tunjangan_kesejahteraan_keluarga'] = 0;
+            $data['total_gaji'] = 0;
+        }
+        
+
         Daftargaji::create($data);
         return redirect(route('daftar-gaji'));
     }
