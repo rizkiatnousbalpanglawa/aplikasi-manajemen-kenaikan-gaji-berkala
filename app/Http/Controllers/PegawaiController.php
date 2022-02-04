@@ -16,9 +16,9 @@ class PegawaiController extends Controller
         $data['satuankerja'] = Satuankerja::all();
         $data['pegawai'] = Pegawai::join('users','pegawais.user_id','users.id')
                             ->join('satuankerjas','pegawais.satuankerjas_id','satuankerjas.id')
-                            ->select('pegawais.id as pegawai_id','users.id as user_id','nama_pegawai','jabatan','nama_satuan_kerja','no_sk','username')
+                            ->select('pegawais.id as pegawai_id','users.id as user_id','nama_pegawai','jabatan','nama_satuan_kerja','no_sk','username','email')
                             ->get();
-        return view('admin/data-pegawai.index', compact('data'));
+        return view('admin.data-pegawai.index', compact('data'));
     }
 
     public function store(Request $request)
@@ -29,6 +29,7 @@ class PegawaiController extends Controller
             'satuankerjas_id' => '',
             'no_sk' => '',
             'username' => ['required', 'unique:users', 'max:255'],
+            'email' => '',
             'user_id' => ''
         ]);
 
@@ -36,6 +37,7 @@ class PegawaiController extends Controller
 
         $user->name = $request->nama_pegawai;
         $user->username = $request->username;
+        $user->email = $request->email;
         $user->password = Hash::make($user->username);
 
         $user->save();

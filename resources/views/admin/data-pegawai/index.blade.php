@@ -18,6 +18,7 @@
         <thead>
             <tr>
                 <th>Nama Pegawai</th>
+                <th>Email</th>
                 <th>Jabatan</th>
                 <th>Satuan Kerja</th>
                 <th>No SK</th>
@@ -30,6 +31,7 @@
             @foreach ($data['pegawai'] as $item)
             <tr>
                 <td>{{ $item->nama_pegawai }}</td>
+                <td>{{ $item->email }}</td>
                 <td>{{ $item->jabatan }}</td>
                 <td>{{ $item->nama_satuan_kerja }}</td>
                 <td>{{ $item->no_sk }}</td>
@@ -83,6 +85,10 @@
                     <div class="mb-3">
                         <label for="">No. SK</label>
                         <input type="text" name="no_sk" class="form-control" id="" required autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <label for="">email</label>
+                        <input type="email" name="email" class="form-control" id="" required autocomplete="off">
                     </div>
                     <div class="mb-3">
                         <label for="">Username</label>

@@ -36,7 +36,7 @@ class DaftargajiController extends Controller
             $data['total_gaji'] = 0;
         }
 
-        if (date('Y', strtotime($request->tahun_masuk)) != "2020" ) {
+        if (date('Y', strtotime($request->tanggal_masuk)) != "2020" ) {
             $data['gaji_pokok'] = 0;
             $data['tunjangan_jabatan'] = 0;
             $data['tunjangan_kesejahteraan_keluarga'] = 0;
