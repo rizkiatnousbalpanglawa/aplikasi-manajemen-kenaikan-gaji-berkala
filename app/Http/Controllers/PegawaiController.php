@@ -8,6 +8,8 @@ use App\Satuankerja;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MailNotify;
 
 class PegawaiController extends Controller
 {
@@ -46,7 +48,9 @@ class PegawaiController extends Controller
         $validatedData['user_id'] = $id;
      
         Pegawai::create($validatedData);
-        return redirect(route('pegawai'));
+
+        // Mail::to($request->email)->send(new MailNotify($request->username));
+        return back();
     }
 
     public function delete(Request $request)

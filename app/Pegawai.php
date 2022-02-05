@@ -12,4 +12,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Satuankerja::class,'satuankerjas_id');
     }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 }
