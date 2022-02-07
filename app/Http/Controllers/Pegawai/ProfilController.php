@@ -28,13 +28,15 @@ class ProfilController extends Controller
         $pegawai->update($data);
 
         if ($data['password'] != null) {
-            $user = User::find($pegawai->id);
+            $user = User::find($pegawai->user_id);
 
             $password['password'] = Hash::make($data['password']);
 
             $user->update($password);
 
         }
+
+        // return $user;
 
         return redirect(route('profil-pegawai'))->with('sukses','Profil berhasil di-update!');
     }
